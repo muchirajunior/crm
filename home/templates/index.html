@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
 CRM - Python Django
 {% endblock %}
-
+{%block page_name%} Hello user 👋   {% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Hello there</h1>
+<div class="container d-flex flex-column justify-content-center align-items-center pt-5 mt-5">
+  
+    <img src="{% static 'images/living-room.png' %}" alt="" class="mx-auto w-25">
+    <p class="text-center text-muted mt-4"> Hello this is the home for Python Django CRM. <br> Navigate around for inspiring content... </p>
+   
+    
 </div>
 {% endblock %}
