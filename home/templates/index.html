@@ -3,13 +3,21 @@
 {% block title %}
 CRM - Python Django
 {% endblock %}
-{%block page_name%} Hello user 👋   {% endblock %}
+{%block page_name%} Hello user 👋 {% endblock %}
 {% block content %}
 <div class="container d-flex flex-column justify-content-center align-items-center pt-5 mt-5">
-  
+
     <img src="{% static 'images/living-room.png' %}" alt="" class="mx-auto w-25">
-    <p class="text-center text-muted mt-4"> Hello this is the home for Python Django CRM. <br> Navigate around for inspiring content... </p>
-   
-    
+    <p class="text-center text-muted mt-4"> Hello this is the home for Python Django CRM. <br> Navigate around for
+        inspiring content... </p>
+
+    {% block action %}
+    <button class="nav-link" data-bs-toggle="dropdown" aria-expanded="false"> <i class="fa-solid fa-user mx-2"></i> </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Register</a></li>
+        <li><a class="dropdown-item" href="#">Login</a></li>
+    </ul>
+    {% endblock %}
 </div>
 {% endblock %}

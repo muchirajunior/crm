@@ -12,7 +12,9 @@
   <body>
    <div class="d-flex flex-row flex-nowrap" style="height: 100vh; width:100%;">
     <div class="col-2 bg-light d-flex flex-column flex-nowrap shadow" >
-      <img src="{% static 'images/crm.png' %}" alt="Logo" width="120" height="70" class="mx-auto pt-3">
+      <a href="{% url 'home' %}">
+        <img src="{% static 'images/crm.png' %}" alt="Logo" width="120" height="70" class="mx-auto pt-3">
+      </a>
       <div class="d-flex shadow ">
         <img src="{% static 'images/user.png' %}" alt="Logo" width="50" height="50" class="m-2 rounded-circle bg-secondary-subtle">
         <span class="m-2">
@@ -51,13 +53,8 @@
         </span>
 
         <span class="shadow card rounded-4 p-3 bg-light ">
-
-          <button class="nav-link"  data-bs-toggle="dropdown" aria-expanded="false" > Create Business Partner </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Register</a></li>
-            <li><a class="dropdown-item" href="#">Login</a></li>
-          </ul>
+          {% block action %}
+          {% endblock %}
         </span>
       </div>
       {% block content %}
