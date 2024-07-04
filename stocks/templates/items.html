@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CRM - Stock Management
+{% endblock %}
+{%block page_name%} Stock Management {% endblock %}
+
+
+{% block action %}
+<!-- Button trigger modal -->
+<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createItemModal">
+    Create Item
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="createItemModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
+    <form class="modal-dialog" action="{% url 'create_item' %}" method="post">
+      <div class="modal-content"> 
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold" id="createItemModalLabel">Create Item</h1>
+          <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control shadow-none" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" class="form-control shadow-none" id="code" name="code" required>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control shadow-none" id="quantity" name="quantity" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control shadow-none" id="price" name="price" required>
+            </div>
+            
+            <button type="submit" class="btn btn-dark w-100 mt-2">SUBMIT</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger mt-3" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
+<div class=" bg-light rounded-2 p-2  m-5">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>                   
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>                    
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <td>{{ item.updated_at }}</td>
+                    <td>
+                        <button href="" class="btn btn-warning"> Update</button>
+                        <a href="" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

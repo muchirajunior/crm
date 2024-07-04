@@ -14,7 +14,7 @@ CRM - Business Partners
   
   <!-- Modal -->
   <div class="modal fade" id="createBPModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createBPModalLabel" aria-hidden="true">
-    <form class="modal-dialog" action="{% url 'create' %}" method="post">
+    <form class="modal-dialog" action="{% url 'create_bp' %}" method="post">
       <div class="modal-content"> 
 
         <div class="modal-header">
@@ -34,7 +34,17 @@ CRM - Business Partners
 {%endblock%}
 
 {% block content %}
-<div class="container d-flex pt-3">
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger mt-3" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
+
+<div class="p-3 m-4 bg-light rounded-2">
     <table class="table table-hover">
         <thead >
           <tr class="bg-dark">

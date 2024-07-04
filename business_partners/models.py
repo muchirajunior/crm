@@ -6,7 +6,7 @@ class BusinessPartner(models.Model):
         ('supplier', 'Supplier'),
         ('partner', 'Partner'),
     ]
-    code = models.CharField(max_length=20)
+    code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
     contact_person = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField()
