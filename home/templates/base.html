@@ -15,15 +15,16 @@
       <a href="{% url 'home' %}" class="ps-4 bg-light">
         <img src="{% static 'images/crm.png' %}" alt="Logo" width="120" height="70" class="mx-auto pt-3">
       </a>
-      <div class="d-flex shadow ">
+      <div class="d-flex m-1 card flex-row mt-3 border-0 shadow-sm">
         <img src="{% static 'images/user.png' %}" alt="Logo" width="50" height="50" class="m-2 rounded-circle bg-secondary-subtle">
         <span class="m-2">
-          <h5>Python Developer</h5>
-          <div class="text-muted">dev@comany.com</div>
+          <h5 class="fw-bold">Python Developer</h5>
+          <div class="text-muted">dev@company.com</div>
         </span>
       </div>
       <div class="flex-fill d-flex flex-column p-2 mt-3">
-        <a href="{% url 'business_partners' %}" class="nav-link fw-bold p-3" > <i class="fa-solid fa-city me-2"></i>Business Partners</a>
+        <div class="text-muted ms-3">Main Menu</div>
+        <a href="{% url 'business_partners' %}" class="nav-link p-3 fw-bold text-muted" > <i class="fa-solid fa-city me-2"></i>Business Partners</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-list me-2"></i>Stock Management</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-user-group me-2"></i>Sales Reps</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-book me-2"></i>Activity Manager</a>
