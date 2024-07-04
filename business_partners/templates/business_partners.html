@@ -1,11 +1,73 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
 CRM - Business Partners
 {% endblock %}
 {%block page_name%} Business Partners  🔆   {% endblock %}
+
+{%block action%}
+<!-- Button trigger modal -->
+<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createBPModal">
+    Create Business Partner
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="createBPModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createBPModalLabel" aria-hidden="true">
+    <form class="modal-dialog" action="{% url 'create' %}" method="post">
+      <div class="modal-content"> 
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold" id="createBPModalLabel">Create Business Partner</h1>
+          <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-dark w-100 mt-2">SUBMIT</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+{%endblock%}
+
 {% block content %}
-<div class="container d-flex">
+<div class="container d-flex pt-3">
+    <table class="table table-hover">
+        <thead >
+          <tr class="bg-dark">
+            <th scope="col">ID</th>
+            <th scope="col">BP Code</th>
+            <th scope="col">BP Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contact Person</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for bp in partners %}
+          <tr>
+            <th scope="row">{{bp.id}}</th>
+            <td>{{bp.code}}</td>
+            <td>{{bp.name}}</td>
+            <td>{{bp.type}}</td>
+            <td>{{bp.email}}</td>
+            <td>{{bp.contact_person}}</td>
+            <td>{{bp.phone}}</td>
+            <td>
+                <a href="#" class="btn btn-warning" >Update</a>
+                <a href="#" class="btn btn-danger" >Delete</a>
+            </td>          
+          </tr>
+          <tr>
+        {% endfor %}
+         
+        </tbody>
+      </table>
   
    
     

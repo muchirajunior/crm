@@ -12,7 +12,7 @@
   <body>
    <div class="d-flex flex-row flex-nowrap" style="height: 100vh; width:100%;">
     <div class="col-2 bg-light d-flex flex-column flex-nowrap shadow" >
-      <a href="{% url 'home' %}">
+      <a href="{% url 'home' %}" class="ps-4 bg-light">
         <img src="{% static 'images/crm.png' %}" alt="Logo" width="120" height="70" class="mx-auto pt-3">
       </a>
       <div class="d-flex shadow ">
@@ -23,7 +23,7 @@
         </span>
       </div>
       <div class="flex-fill d-flex flex-column p-2 mt-3">
-        <a href="#" class="nav-link fw-bold p-3 bg-secondary-subtle rounded-2"> <i class="fa-solid fa-city me-2"></i>Business Partners</a>
+        <a href="{% url 'business_partners' %}" class="nav-link fw-bold p-3" > <i class="fa-solid fa-city me-2"></i>Business Partners</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-list me-2"></i>Stock Management</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-user-group me-2"></i>Sales Reps</a>
         <a href="#" class="nav-link fw-bold p-3 text-muted"> <i class="fa-solid fa-book me-2"></i>Activity Manager</a>
