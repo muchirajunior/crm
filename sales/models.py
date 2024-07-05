@@ -1,7 +1,7 @@
 from django.db import models
 
 class SalesDocument(models.Model):
-    number = models.CharField(max_length=10, unique=True)
+    number = models.CharField(max_length=10)
     customer_name = models.CharField(max_length=100)
     customer_code = models.CharField(max_length=100)
     object_code = models.CharField(max_length=100)
