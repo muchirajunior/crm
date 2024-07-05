@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'home',
     'business_partners',
-    'stocks'
+    'stocks',
+    'salesreps'
 ]
 
 MIDDLEWARE = [

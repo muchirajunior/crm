@@ -17,7 +17,7 @@ CRM - Business Partners
     <form class="modal-dialog" action="{% url 'create_bp' %}" method="post">
       <div class="modal-content"> 
 
-        <div class="modal-header">
+        <div class="modal-header  border-0">
           <h1 class="modal-title fs-5 fw-bold" id="createBPModalLabel">Create Business Partner</h1>
           <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -69,8 +69,8 @@ CRM - Business Partners
             <td>{{bp.contact_person}}</td>
             <td>{{bp.phone}}</td>
             <td>
-                <a href="#" class="btn btn-warning" >Update</a>
-                <a href="#" class="btn btn-danger" >Delete</a>
+                <a href="#" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal" >Update</a>
+                <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal" >Delete</a>
             </td>          
           </tr>
           <tr>

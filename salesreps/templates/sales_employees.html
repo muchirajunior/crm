@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CRM - Sales Employes
+{% endblock %}
+{%block page_name%} Sales Employees  👫 {% endblock %}
+
+
+{% block action %}
+<!-- Button trigger modal -->
+<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createItemModal">
+    Create Sales Rep
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="createItemModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" action="{% url 'create_item' %}" method="post">
+      <div class="modal-content"> 
+
+        <div class="modal-header  border-0">
+          <h1 class="modal-title fs-5 fw-bold" id="createItemModalLabel">Create Sales Employee</h1>
+          <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form method="post" action="{% url 'create_sales_employee' %}" class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" class="form-control shadow-none" id="code" name="code" required>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control shadow-none" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control shadow-none" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" class="form-control shadow-none" id="phone" name="phone" required>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Create Sales Employee</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+
+<div class=" bg-light rounded-2 p-2  m-5">
+    <div class="table-responsive mt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.code }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.phone }}</td>
+                    <td>{{ employee.created_at }}</td>
+                    <td>{{ employee.updated_at }}</td>
+                    <td>
+                        <button class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#updateSalesEmployeeModal{{ employee.id }}">Edit</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Update Sales Employee Modal -->
+                <div class="modal fade" id="updateSalesEmployeeModal{{ employee.id }}" tabindex="-1" aria-labelledby="updateSalesEmployeeModalLabel{{ employee.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header  border-0">
+                                <h5 class="modal-title fw-bold" id="updateSalesEmployeeModalLabel{{ employee.id }}">Update Sales Employee</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url 'update_sales_employee' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ employee.id }}">
+                                    <div class="mb-3">
+                                        <label for="update-code-{{ employee.id }}" class="form-label">Code</label>
+                                        <input type="text" class="form-control shadow-none" id="update-code-{{ employee.id }}" name="code" value="{{ employee.code }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-name-{{ employee.id }}" class="form-label">Name</label>
+                                        <input type="text" class="form-control shadow-none" id="update-name-{{ employee.id }}" name="name" value="{{ employee.name }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-email-{{ employee.id }}" class="form-label">Email</label>
+                                        <input type="email" class="form-control shadow-none" id="update-email-{{ employee.id }}" name="email" value="{{ employee.email }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-phone-{{ employee.id }}" class="form-label">Phone</label>
+                                        <input type="text" class="form-control shadow-none" id="update-phone-{{ employee.id }}" name="phone" value="{{ employee.phone }}" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark w-100">Update Sales Employee</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-CRM - Stock Management
+CRM - Stock Management  💼
 {% endblock %}
 {%block page_name%} Stock Management {% endblock %}
 
@@ -17,7 +17,7 @@ CRM - Stock Management
     <form class="modal-dialog" action="{% url 'create_item' %}" method="post">
       <div class="modal-content"> 
 
-        <div class="modal-header">
+        <div class="modal-header border-0">
           <h1 class="modal-title fs-5 fw-bold" id="createItemModalLabel">Create Item</h1>
           <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -86,13 +86,13 @@ CRM - Stock Management
                     <td>{{ item.updated_at }}</td>
                     <td>
                         <button href="" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateItemModal{{ item.id }}"> Update</button>
-                        <a href="" class="btn btn-danger">Delete</a>
+                        <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal">Delete</a>
                     </td>
                 </tr>
                 <div class="modal fade" id="updateItemModal{{ item.id }}" tabindex="-1" aria-labelledby="updateItemModalLabel{{ item.id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header border-0">
                                 <h5 class="modal-title" id="updateItemModalLabel{{ item.id }}">Update Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
