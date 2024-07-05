@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CRM - Sales Documents
+{% endblock %}
+{%block page_name%} Sales Documents 📂 {% endblock %}
+
+
+{% block action %}<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createItemModal">
+    Create Sales Document
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="createItemModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" action="{% url 'create_item' %}" method="post">
+      <div class="modal-content"> 
+
+        <div class="modal-header  border-0">
+          <h1 class="modal-title fs-5 fw-bold" id="createItemModalLabel">Create Sales Document</h1>
+          <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form method="post" action="{% url 'create_sales_document' %}" class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="customer_name" class="form-label">Customer Name</label>
+                <select class="form-control shadow-none" id="customer_name" name="customer_name" required>
+                    {% for partner in business_partners %}
+                    <option value="{{ partner.name }}">{{ partner.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="object_code" class="form-label">Object Code</label>
+                <select class="form-control shadow-none" id="object_code" name="object_code" required>
+                    <option value="QUOTATION">Sales Quotation</option>
+                    <option value="ORDER">Sales Order</option>
+                    <option value="INVOICE">Sales Invoice</option>
+                  
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="sales_employee" class="form-label">Sales Employee</label>
+                <select class="form-control shadow-none" id="sales_employee" name="sales_employee" required>
+                    {% for employee in sales_employees %}
+                    <option value="{{ employee.name }}">{{ employee.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Create Sales Document</button>
+        </form>
+        
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+
+<div class="container mt-5">
+    
+    
+    <div class="table-responsive mt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Customer Name</th>
+                    <th>Customer Code</th>
+                    <th>Object Code</th>
+                    <th>Sales Employee</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                <tr>
+                    <td>100{{ document.id }}</td>
+                    <td>{{ document.customer_name }}</td>
+                    <td>{{ document.customer_code }}</td>
+                    <td>{{ document.object_code }}</td>
+                    <td>{{ document.sales_employee }}</td>
+                    <td>{{ document.created_at }}</td>
+                    <td>{{ document.updated_at }}</td>
+                    <td>
+                        <a href="{% url 'view_sales_document' document.id %}" class="btn btn-warning">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
