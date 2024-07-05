@@ -54,8 +54,9 @@ CRM - Stock Management
 
 {% if messages %}
 {% for message in messages %}
-    <div class="alert alert-danger mt-3" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
         {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endfor %}
 {% endif %}
@@ -84,13 +85,49 @@ CRM - Stock Management
                     <td>{{ item.created_at }}</td>
                     <td>{{ item.updated_at }}</td>
                     <td>
-                        <button href="" class="btn btn-warning"> Update</button>
+                        <button href="" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateItemModal{{ item.id }}"> Update</button>
                         <a href="" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
+                <div class="modal fade" id="updateItemModal{{ item.id }}" tabindex="-1" aria-labelledby="updateItemModalLabel{{ item.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateItemModalLabel{{ item.id }}">Update Item</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url 'update_item' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <div class="mb-3">
+                                        <label for="update-name-{{ item.id }}" class="form-label">Name</label>
+                                        <input type="text" class="form-control shadow-none" id="update-name-{{ item.id }}" name="name" value="{{ item.name }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-code-{{ item.id }}" class="form-label">Code</label>
+                                        <input type="text" class="form-control shadow-none" id="update-code-{{ item.id }}" name="code" value="{{ item.code }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-quantity-{{ item.id }}" class="form-label">Quantity</label>
+                                        <input type="number" class="form-control shadow-none" id="update-quantity-{{ item.id }}" name="quantity" value="{{ item.quantity }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-price-{{ item.id }}" class="form-label">Price</label>
+                                        <input type="text" class="form-control shadow-none" id="update-price-{{ item.id }}" name="price" value="{{ item.price }}" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark w-100">Update Item</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+
 {% endblock %}
