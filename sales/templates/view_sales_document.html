@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CRM - Sales Document {{ document.id }}
+{% endblock %}
+{%block page_name%} Sales Document (No: {{ document.id }}) 📂 {% endblock %}
+
+
+{% block action %}<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#addItemModal">
+    Add Item
+  </button>
+  
+<!-- Add Item Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fw-bold border-none">
+                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="item_id" class="form-label">Select Item</label>
+                        <select class="form-control shadow-none" id="item_id" name="item_id" required>
+                            {% for item in available_items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control shadow-none" id="quantity" name="quantity" required>
+                    </div>
+                    <button type="submit" name="add_item" class="btn btn-dark w-100">Add Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+
+<div class="container mt-5">
+    <h2>Sales Document: {{ document.customer_name }}</h2>
+    <div class="mb-3 border rounded-2 p-2">
+        <strong class="me-3">Customer Name:</strong> {{ document.customer_name }}<br>
+        <strong class="me-3">Customer Code:</strong> {{ document.customer_code }}<br>
+        <strong class="me-3">Object Code:</strong> {{ document.object_code }}<br>
+        <strong class="me-3">Sales Employee:</strong> {{ document.sales_employee }}<br>
+        <strong class="me-3">Document Total:</strong> {{ document.doc_total }}<br>
+        <strong class="me-3">Created At:</strong> {{ document.created_at }}<br>
+        <strong class="me-3">Updated At:</strong> {{ document.updated_at }}<br>
+    </div>
+
+    <div class="mb-3">
+      
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Code</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.item_code }}</td>
+                        <td>{{ item.item_price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total_price }}</td>
+                        <td>
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit" name="remove_item" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

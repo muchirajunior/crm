@@ -76,10 +76,10 @@ CRM - Sales Documents
             <thead>
                 <tr>
                     <th>Number</th>
-                    <th>Customer Name</th>
                     <th>Customer Code</th>
                     <th>Object Code</th>
                     <th>Sales Employee</th>
+                    <th>Document Total</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Actions</th>
@@ -88,11 +88,11 @@ CRM - Sales Documents
             <tbody>
                 {% for document in documents %}
                 <tr>
-                    <td>100{{ document.id }}</td>
                     <td>{{ document.customer_name }}</td>
                     <td>{{ document.customer_code }}</td>
                     <td>{{ document.object_code }}</td>
                     <td>{{ document.sales_employee }}</td>
+                    <td>{{ document.doc_total }}</td>
                     <td>{{ document.created_at }}</td>
                     <td>{{ document.updated_at }}</td>
                     <td>
