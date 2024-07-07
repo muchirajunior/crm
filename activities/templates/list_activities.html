@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CRM - Activities
+{% endblock %}
+{%block page_name%} Activities  🌀 {% endblock %}
+
+
+{% block action %}
+<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createActivity">
+    Create Activity
+  </button>
+  
+
+  <div class="modal fade" id="createActivity" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createActivityLabel" aria-hidden="true">
+    <form class="modal-dialog" action="{% url 'create_activity' %}" method="post">
+      <div class="modal-content"> 
+
+        <div class="modal-header border-0">
+          <h1 class="modal-title fs-4 fw-bold" id="createActivityLabel">Create Activity</h1>
+          <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+        
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="sales_person_name" class="form-label fw-bold">Sales Person Name</label>
+                <select class="form-control shadow-none" id="sales_person_name" name="sales_person_name" required>
+                    {% for employee in sales_employees %}
+                    <option value="{{ employee.name }}">{{ employee.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="business_partner" class="form-label fw-bold">Business Partner</label>
+                <select class="form-control shadow-none" id="business_partner" name="business_partner" required>
+                    {% for partner in business_partners %}
+                    <option value="{{ partner.id }}">{{ partner.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="sales_document" class="form-label fw-bold">Sales Document</label>
+                <select class="form-control shadow-none" id="sales_document" name="sales_document" required>
+                    {% for document in sales_documents %}
+                    <option value="{{ document.id }}"> {{document.id}} -- {{ document.customer_code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="activity_type" class="form-label fw-bold">Activity Type</label>
+                <select class="form-control shadow-none" id="activity_type" name="activity_type" required>
+                    <option value="phone_call">Phone Call</option>
+                    <option value="visit">Visit</option>
+                    <option value="campaign">Campaign</option>
+                    <option value="meeting">Meeting</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="start_time" class="form-label fw-bold">Start Time</label>
+                <input type="time" class="form-control shadow-none" id="start_time" name="start_time" required>
+            </div>
+            <div class="mb-3">
+                <label for="end_time" class="form-label fw-bold">End Time</label>
+                <input type="time" class="form-control shadow-none" id="end_time" name="end_time" required>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label fw-bold">Date</label>
+                <input type="date" class="form-control shadow-none" id="date" name="date" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label fw-bold">Description</label>
+                <textarea class="form-control shadow-none" id="description" name="description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Create Activity</button>
+            
+        </div>
+        
+        
+
+      </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Activities</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sales Person Name</th>
+                    <th>Business Partner</th>
+                    <th>Activity Type</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Date</th>
+                    <th>Sales Document</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.sales_person_name }}</td>
+                    <td>{{ activity.business_partner.name }}</td>
+                    <td>{{ activity.get_activity_type_display }}</td>
+                    <td>{{ activity.start_time }}</td>
+                    <td>{{ activity.end_time }}</td>
+                    <td>{{ activity.date }}</td>
+                    <td><a href="{% url 'view_sales_document' activity.sales_document.id %}" class="nav-link text-primary fw-bold"> Document - {{activity.sales_document.id}}</a></td>
+                    <td>{{ activity.description }}</td>
+                    <td>
+                        <button href="" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateActivity{{ item.id }}"> Update</button>
+                        <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal">Delete</a>
+                    </td>
+                </tr>
+
+                <div class="modal fade" id="updateActivity{{ item.id }}" tabindex="-1" aria-labelledby="updateActivityLabel{{ item.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold fs-4" id="updateActivityLabel{{ item.id }}">Update Activity</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="sales_person_name" class="form-label fw-bold">Sales Person Name</label>
+                                        <select class="form-control shadow-none" id="sales_person_name" name="sales_person_name" required>
+                                            {% for employee in sales_employees %}
+                                            <option value="{{ employee.name }}" {% if activity.sales_person_name == employee.name %}selected{% endif %}>{{ employee.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="business_partner" class="form-label fw-bold">Business Partner</label>
+                                        <select class="form-control shadow-none" id="business_partner" name="business_partner" required>
+                                            {% for partner in business_partners %}
+                                            <option value="{{ partner.id }}" {% if activity.business_partner.id == partner.id %}selected{% endif %}>{{ partner.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="sales_document" class="form-label fw-bold">Sales Document</label>
+                                        <select class="form-control shadow-none" id="sales_document" name="sales_document" required>
+                                            {% for document in sales_documents %}
+                                            <option value="{{ document.id }}" {% if activity.sales_document.id == document.id %}selected{% endif %}>{{ document.customer_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="activity_type" class="form-label fw-bold">Activity Type</label>
+                                        <select class="form-control shadow-none" id="activity_type" name="activity_type" required>
+                                            <option value="phone_call" {% if activity.activity_type == 'phone_call' %}selected{% endif %}>Phone Call</option>
+                                            <option value="visit" {% if activity.activity_type == 'visit' %}selected{% endif %}>Visit</option>
+                                            <option value="campaign" {% if activity.activity_type == 'campaign' %}selected{% endif %}>Campaign</option>
+                                            <option value="meeting" {% if activity.activity_type == 'meeting' %}selected{% endif %}>Meeting</option>
+                                           
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="start_time" class="form-label fw-bold">Start Time</label>
+                                        <input type="time" class="form-control shadow-none" id="start_time" name="start_time" value="{{ activity.start_time }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="end_time" class="form-label fw-bold">End Time</label>
+                                        <input type="time" class="form-control shadow-none" id="end_time" name="end_time" value="{{ activity.end_time }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="date" class="form-label fw-bold">Date</label>
+                                        <input type="date" class="form-control shadow-none" id="date" name="date" value="{{ activity.date }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label fw-bold">Description</label>
+                                        <textarea class="form-control shadow-none" id="description" name="description">{{ activity.description }}</textarea>
+                                    </div>
+                                    <button type="submit" class="btn bg-dark w-100">Update Activity</button>
+                                </form>
+                            </div>
+                            
+
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
