@@ -24,7 +24,7 @@ This CRM (Customer Relationship Management) project is designed to manage variou
 
 - **Opportunities:** Track sales opportunities, including stage, amount, expected close date, and associated business partners.
 ![Opportunities](static/images/opportunities.png)
-![Opportunity](static/images/opportunitiy.png)
+![Opportunity](static/images/opportunity.png)
 
 
 - **Campaigns:** Plan and track marketing campaigns to manage customer engagement and lead generation.
@@ -45,8 +45,8 @@ This CRM (Customer Relationship Management) project is designed to manage variou
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/crm-project.git
-   cd crm-project
+   git clone https://github.com/muchirajunior/crm.git
+   cd crm
    ```
 
 2. Create and activate a virtual environment:
