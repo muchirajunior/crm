@@ -41,26 +41,23 @@ def create_activity(request):
     return redirect('list_activities')
 
 def list_activities(request):
-    try:
-        activities = Activity.objects.all()
+    activities = Activity.objects.all()
 
-        business_partners = BusinessPartner.objects.all()
-        sales_documents = SalesDocument.objects.all()
-        sales_employees = SalesEmployee.objects.all()
+    business_partners = BusinessPartner.objects.all()
+    sales_documents = SalesDocument.objects.all()
+    sales_employees = SalesEmployee.objects.all()
 
-        return render(request, 'list_activities.html', {
-            'activities': activities,
-            'business_partners': business_partners,
-            'sales_documents': sales_documents,
-            'sales_employees': sales_employees
-        })
+    return render(request, 'list_activities.html', {
+        'activities': activities,
+        'business_partners': business_partners,
+        'sales_documents': sales_documents,
+        'sales_employees': sales_employees
+    })
     
-    except Exception as e:
-        messages.error(request, f"Error fetching activities: {e}")
-        return redirect('list_activities')
 
 def update_activity(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+    print(f'Updating activity ${activity_id}')
 
     if request.method == 'POST':
         try:

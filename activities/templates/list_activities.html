@@ -89,6 +89,15 @@ CRM - Activities
 
 {% block content %}
 
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+
 <div class="container mt-5">
     <h2>Activities</h2>
     <div class="table-responsive">
@@ -132,7 +141,7 @@ CRM - Activities
                             </div>
 
                             <div class="modal-body">
-                                <form method="post">
+                                <form method="post" action="{% url 'update_activity' activity.id %}">
                                     {% csrf_token %}
                                     <div class="mb-3">
                                         <label for="sales_person_name" class="form-label fw-bold">Sales Person Name</label>
@@ -154,7 +163,7 @@ CRM - Activities
                                         <label for="sales_document" class="form-label fw-bold">Sales Document</label>
                                         <select class="form-control shadow-none" id="sales_document" name="sales_document" required>
                                             {% for document in sales_documents %}
-                                            <option value="{{ document.id }}" {% if activity.sales_document.id == document.id %}selected{% endif %}>{{ document.customer_name }}</option>
+                                            <option value="{{ document.id }}" {% if activity.sales_document.id == document.id %}selected{% endif %}> {{document.id}} -- {{ document.customer_code }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -170,21 +179,21 @@ CRM - Activities
                                     </div>
                                     <div class="mb-3">
                                         <label for="start_time" class="form-label fw-bold">Start Time</label>
-                                        <input type="time" class="form-control shadow-none" id="start_time" name="start_time" value="{{ activity.start_time }}" required>
+                                        <input type="time" class="form-control shadow-none" id="start_time"  name="start_time" value="{{ activity.start_time|date:'H:i' }}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="end_time" class="form-label fw-bold">End Time</label>
-                                        <input type="time" class="form-control shadow-none" id="end_time" name="end_time" value="{{ activity.end_time }}" required>
+                                        <input type="time" class="form-control shadow-none" id="end_time" name="end_time" value="{{ activity.end_time|date:'H:i' }}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="date" class="form-label fw-bold">Date</label>
-                                        <input type="date" class="form-control shadow-none" id="date" name="date" value="{{ activity.date }}" required>
+                                        <input type="date" class="form-control shadow-none" id="date" name="date" value="{{ activity.date|date:'Y-m-d' }}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="description" class="form-label fw-bold">Description</label>
                                         <textarea class="form-control shadow-none" id="description" name="description">{{ activity.description }}</textarea>
                                     </div>
-                                    <button type="submit" class="btn bg-dark w-100">Update Activity</button>
+                                    <button type="submit" class="btn btn-dark w-100">Update Activity</button>
                                 </form>
                             </div>
                             
