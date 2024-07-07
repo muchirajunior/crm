@@ -18,7 +18,7 @@ CRM - Business Partners
       <div class="modal-content"> 
 
         <div class="modal-header  border-0">
-          <h1 class="modal-title fs-5 fw-bold" id="createBPModalLabel">Create Business Partner</h1>
+          <h1 class="modal-title fs-5 fw-bold" id="createBPModalLabel"> 🌱 Create Business Partner</h1>
           <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -37,8 +37,9 @@ CRM - Business Partners
 
 {% if messages %}
 {% for message in messages %}
-    <div class="alert alert-danger mt-3" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show my-3 mx-5" role="alert">
         {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endfor %}
 {% endif %}
@@ -59,21 +60,69 @@ CRM - Business Partners
           </tr>
         </thead>
         <tbody>
-            {% for bp in partners %}
+            {% for partner in partners %}
           <tr>
-            <th scope="row">{{bp.id}}</th>
-            <td>{{bp.code}}</td>
-            <td>{{bp.name}}</td>
-            <td>{{bp.type}}</td>
-            <td>{{bp.email}}</td>
-            <td>{{bp.contact_person}}</td>
-            <td>{{bp.phone}}</td>
+            <th scope="row">{{partner.id}}</th>
+            <td>{{partner.code}}</td>
+            <td>{{partner.name}}</td>
+            <td>{{partner.type}}</td>
+            <td>{{partner.email}}</td>
+            <td>{{partner.contact_person}}</td>
+            <td>{{partner.phone}}</td>
             <td>
-                <a href="#" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal" >Update</a>
+                <a href="#" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#updateModal{{ partner.id }}" >Update</a>
                 <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#operationNotAllowedModal" >Delete</a>
             </td>          
           </tr>
           <tr>
+          <div class="modal fade" id="updateModal{{ partner.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ partner.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header fw-bold border-none">
+                        <h5 class="modal-title" id="updateModalLabel{{ partner.id }}"> 🌱 Update Business Partner</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'update_business_partner' partner.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">  
+                                <label for="code{{ partner.id }}" class="form-label fw-bold">Code</label>
+                                <input type="text" class="form-control shadow-none" id="code{{ partner.id }}" name="code" value="{{ partner.code }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name{{ partner.id }}" class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control shadow-none" id="name{{ partner.id }}" name="name" value="{{ partner.name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact_person{{ partner.id }}" class="form-label fw-bold">Contact Person</label>
+                                <input type="text" class="form-control shadow-none" id="contact_person{{ partner.id }}" name="contact_person" value="{{ partner.contact_person }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email{{ partner.id }}" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control shadow-none" id="email{{ partner.id }}" name="email" value="{{ partner.email }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone{{ partner.id }}" class="form-label fw-bold">Phone</label>
+                                <input type="text" class="form-control shadow-none" id="phone{{ partner.id }}" name="phone" value="{{ partner.phone }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="address{{ partner.id }}" class="form-label fw-bold">Address</label>
+                                <input type="text" class="form-control shadow-none" id="address{{ partner.id }}" name="address" value="{{ partner.address }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="type{{ partner.id }}" class="form-label fw-bold">Type</label>
+                                <select class="form-control shadow-none" id="type{{ partner.id }}" name="type" required>
+                                    <option value="customer" {% if partner.type == 'customer' %}selected{% endif %}>Customer</option>
+                                    <option value="supplier" {% if partner.type == 'supplier' %}selected{% endif %}>Supplier</option>
+                                    <option value="partner" {% if partner.type == 'partner' %}selected{% endif %}>Partner</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100">Update Business Partner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
          
         </tbody>
