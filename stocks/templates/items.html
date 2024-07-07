@@ -16,7 +16,7 @@ CRM - Stock Management
       <div class="modal-content"> 
 
         <div class="modal-header border-0">
-          <h1 class="modal-title fs-4 fw-bold" id="createItemModalLabel">Create Item</h1>
+          <h1 class="modal-title fs-4 fw-bold" id="createItemModalLabel">🌸 Create Item</h1>
           <button type="button" class="btn-close border-0 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -91,11 +91,11 @@ CRM - Stock Management
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header border-0">
-                                <h5 class="modal-title fw-bold fs-4" id="updateItemModalLabel{{ item.id }}">Update Item</h5>
+                                <h5 class="modal-title fw-bold fs-4" id="updateItemModalLabel{{ item.id }}">🌸 Update Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="{% url 'update_activity' %}">
+                                <form method="post" action="{% url 'update_item' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="id" value="{{ item.id }}">
                                     <div class="mb-3">
