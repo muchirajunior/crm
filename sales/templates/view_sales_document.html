@@ -6,7 +6,7 @@ CRM - Sales Document {{ document.id }}
 {%block page_name%} Sales Document (No: {{ document.id }}) 📂 {% endblock %}
 
 
-{% block action %}<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#addItemModal">
+{% block action %}<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addItemModal">
     Add Item
   </button>
   
@@ -53,7 +53,7 @@ CRM - Sales Document {{ document.id }}
 {% endfor %}
 {% endif %}
 
-<div class="container mt-5">
+<div class="mt-5">
     <h2>Sales Document: {{ document.customer_name }}</h2>
     <div class="mb-3 border rounded-2 p-2">
         <strong class="me-3">Customer Name:</strong> {{ document.customer_name }}<br>
