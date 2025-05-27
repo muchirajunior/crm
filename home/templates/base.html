@@ -12,11 +12,11 @@
   </head>
   <body>
    <div class="d-flex flex-row flex-nowrap" style="height: 100vh; width:100%;">
-    <div class="col-2 bg-light d-flex flex-column flex-nowrap shadow" >
+    <div class="col-2 bg-light d-flex flex-column flex-nowrap shadow-sm" >
       <a href="{% url 'home' %}" class="ps-4 bg-light">
         <img src="{% static 'images/crm.png' %}" alt="Logo" width="120" height="70" class="mx-auto pt-3">
       </a>
-      <div class="d-flex m-1 card flex-row mt-3 border-0 shadow-sm">
+      <div class="d-flex m-1 flex-row mt-3 border-bottom">
         <img src="{% static 'images/user.png' %}" alt="Logo" width="50" height="50" class="m-2 rounded-circle bg-secondary-subtle">
         <span class="m-2">
           <h5 class="fw-bold">Python Developer</h5>
@@ -54,7 +54,7 @@
          
         </span>
 
-        <span class="shadow-sm  rounded-3 p-3 bg-light border border-secondary-subtle ">
+        <span class="shadow-sm  rounded-3 p-3 bg-dark border-secondary-subtle text-light ">
           {% block action %}
           {% endblock %}
         </span>
