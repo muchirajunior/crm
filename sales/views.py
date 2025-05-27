@@ -29,7 +29,7 @@ def create_sales_document(request):
 
         try:
             document = SalesDocument.objects.create(customer_name=customer_name, customer_code=customer_code, object_code=object_code, sales_employee=sales_employee, doc_total=0)
-            messages.success(request, f"Sales Document '{document.number}' created successfully.")
+            messages.success(request, f"Sales Document created successfully.")
             return redirect('sales_documents')
         except Exception as e:
             messages.error(request, f"Failed to create Sales Document: {e}")
